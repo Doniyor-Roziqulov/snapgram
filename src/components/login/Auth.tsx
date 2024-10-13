@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import logbg from "../../images/logbg.png";
-import logo from "../../images/Logo.svg";
+import logoimg from "../../images/Logo.svg";
 import LogIn from "./LogIn";
 import SignIn from "./SignIn";
 import {
@@ -47,7 +47,7 @@ const Auth = () => {
                             {action !== "Sign In" && (
                                 <img
                                     className="block mx-auto mb-[68px]"
-                                    src={logo}
+                                    src={logoimg}
                                     alt="logo"
                                 />
                             )}
