@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import logbg from "../../images/logbg.png";
-import logoimg from "../../images/Logo.svg";
+import logoimg from "../../images/logo.svg";
 import LogIn from "./LogIn";
 import SignIn from "./SignIn";
 import {
