@@ -15,18 +15,28 @@ const Auth = () => {
     const [user, { isSuccess: isUserSuccess }] = useSignInMutation();
     const navigate = useNavigate();
 
-    const handleSendMessage = (e: any) => {
+    const handleSendMessage = async (e: any) => {
         e.preventDefault();
         let formData = new FormData(e.target);
         let data = Object.fromEntries(formData.entries());
-        user(data);
+        user(data)
+            .unwrap()
+            .then((res: { accessToken: string }) => {
+                localStorage.setItem("accessToken", res.accessToken);
+                location.pathname = "/";
+            });
     };
 
     const handleSendLog = (e: any) => {
         e.preventDefault();
         let formData = new FormData(e.target);
         let data = Object.fromEntries(formData.entries());
-        users(data);
+        users(data)
+            .unwrap()
+            .then((res: { accessToken: string }) => {
+                localStorage.setItem("accessToken", res.accessToken);
+                location.pathname = "/";
+            });
     };
 
     useEffect(() => {
