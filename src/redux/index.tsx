@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import counterSlice from "./slice/counter-slice";
-import authSlice, { setToken } from "./slice/authSlice";
+import authSlice, { setToken } from "./slice/auth-slice";
 import { api } from "./api";
 
 export const store = configureStore({

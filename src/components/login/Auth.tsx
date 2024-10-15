@@ -10,7 +10,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 const Auth = () => {
-    const [action, setAction] = useState<string>("Sign In");
+    const [action, setAction] = useState<string>("Log in");
     const [users, { isSuccess }] = useRegisterUserMutation();
     const [user, { isSuccess: isUserSuccess }] = useSignInMutation();
     const navigate = useNavigate();
