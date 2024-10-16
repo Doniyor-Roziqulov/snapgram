@@ -13,11 +13,13 @@ import {
     useProfileQuery,
 } from "../../redux/api/user-api";
 import { User } from "../../types";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux";
 
 const Home = () => {
     const { data } = useGetUsersQuery({ limit: 8 });
     const { data: prodata } = useProfileQuery({});
-    console.log(prodata);
+    const userState = useSelector((state: RootState) => state.auth.user);
 
     const [followUser] = useFollowMutation();
 
@@ -39,9 +41,7 @@ const Home = () => {
                 <p className="text-[10px] font-medium text-[#7878A3] text-center mb-3">
                     Followed by jsmastery
                 </p>
-                {user.followers.some(
-                    (item) => item._id === "670e93da6c3f26c9ca6bfcfa"
-                ) ? (
+                {user.followers.some((item) => item._id === userState?._id) ? (
                     <button
                         onClick={() =>
                             handleFollow("unfollow/" + user.username)
@@ -71,13 +71,13 @@ const Home = () => {
                             className="w-[54px] h-[54px] rounded-full"
                             src={
                                 import.meta.env.VITE_APP_BASE_URL +
-                                prodata?.photo
+                                userState?.photo
                             }
                             alt="User img"
                         />
                         <div>
                             <h3 className="text-lg text-white font-bold">
-                                {prodata?.fullName}
+                                {userState?.fullName}
                             </h3>
                             <p className="text-sm text-[#7878A3]">
                                 @{prodata?.username}

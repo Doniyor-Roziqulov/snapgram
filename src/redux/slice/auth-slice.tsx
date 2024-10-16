@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     token: localStorage.getItem("accessToken") || null,
-    user: localStorage.getItem("user-data") || null,
+    user: JSON.parse(localStorage.getItem("user-data")!) || null,
 };
 
 const authSlice = createSlice({
@@ -15,7 +15,7 @@ const authSlice = createSlice({
         },
         setUser: (state, action) => {
             state.user = action.payload;
-            localStorage.setItem("user-data", action.payload);
+            localStorage.setItem("user-data", JSON.stringify(action.payload));
         },
         logout: (state) => {
             state.token = null;

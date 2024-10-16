@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
-// import { logout } from '../slices/authSlice';
+import { logout } from "../slice/auth-slice";
 
 const baseQuery = async (args: any, api: any, extraOptions: any) => {
-    // const { dispatch } = api
+    const { dispatch } = api;
 
     const rawBaseQuery = fetchBaseQuery({
         baseUrl: import.meta.env.VITE_APP_BASE_URL,
@@ -21,7 +21,7 @@ const baseQuery = async (args: any, api: any, extraOptions: any) => {
         const { status } = result.error;
         if (status === 401 || status === 403) {
             console.error("Unauthorized access - Redirecting to login...");
-            // dispatch(logout())
+            dispatch(logout());
         }
     }
     return result;
