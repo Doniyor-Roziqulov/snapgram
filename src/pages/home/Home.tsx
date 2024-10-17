@@ -10,24 +10,15 @@ import {
     IoSettingsOutline,
 } from "react-icons/io5";
 import { MdCreateNewFolder } from "react-icons/md";
-import {
-    useFollowMutation,
-    useGetUsersQuery,
-    useProfileQuery,
-} from "../../redux/api/user-api";
-import { User } from "../../types";
+import { useProfileQuery } from "../../redux/api/user-api";
+
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux";
 import { logout } from "../../redux/slice/auth-slice";
 
 const Home = () => {
-    const { data } = useGetUsersQuery({ limit: 8 });
     const { data: prodata } = useProfileQuery({});
     const userState = useSelector((state: RootState) => state.auth.user);
-
-    const [followUser] = useFollowMutation();
-
-    const handleFollow = (username: string) => followUser(username);
 
     const dispatch = useDispatch();
 
@@ -35,40 +26,6 @@ const Home = () => {
         dispatch(logout());
     };
 
-    const userList: JSX.Element[] = data?.map(
-        (user: User): JSX.Element => (
-            <div
-                className="border border-[#1F1F22] rounded-[20px] py-6 px-[35px] flex flex-col items-center"
-                key={user._id}>
-                <img
-                    className="w-[54px] h-[54px] rounded-full"
-                    src={import.meta.env.VITE_APP_BASE_URL + user.photo}
-                    alt="User img"
-                />
-                <h3 className="text-sm font-semibold text-white mb-[2px] mt-[10px] text-center overflow-hidden whitespace-nowrap text-ellipsis">
-                    {user.fullName}
-                </h3>
-                <p className="text-[10px] font-medium text-[#7878A3] text-center mb-3">
-                    Followed by jsmastery
-                </p>
-                {user.followers.some((item) => item._id === userState?._id) ? (
-                    <button
-                        onClick={() =>
-                            handleFollow("unfollow/" + user.username)
-                        }
-                        className="hover:opacity-60 block text-xs text-neutral-700 font-semibold py-[6px] px-[18px] rounded-lg bg-[#7ebeff]">
-                        Unfollow
-                    </button>
-                ) : (
-                    <button
-                        onClick={() => handleFollow("follow/" + user.username)}
-                        className="hover:opacity-60 block text-xs text-white font-semibold py-[6px] px-[18px] rounded-lg bg-[#877EFF]">
-                        Follow
-                    </button>
-                )}
-            </div>
-        )
-    );
     return (
         <div className="container mx-auto">
             <div className="w-[266px] fixed left-0 bg-[#09090A] top-0 min-h-screen pt-7 pb-8 px-6 border-r border-[#1F1F22]">
@@ -164,20 +121,12 @@ const Home = () => {
                         className="px-4 py-2 w-full home_nav hover:bg-[#877EFF] rounded-lg text-lg text-[#EFEFEF] font-medium flex items-center gap-x-4"
                         to={"/settings"}>
                         <IoSettingsOutline className="text-2xl text-[#877EFF] link__icon" />{" "}
-                        Create Post
+                        Settings
                     </NavLink>
                 </div>
             </div>
             <div className="ml-[266px] mx-auto container w-auto">
                 <Outlet />
-            </div>
-            <div className="w-[465px] fixed right-0 top-0 min-h-screen bg-[#09090A] border-l border-[#1F1F22]">
-                <div className="pt-12 pl-6 pr-[37px]">
-                    <h2 className="text-white text-2xl font-bold mb-10">
-                        Top Creators
-                    </h2>
-                    <div className="grid grid-cols-2 gap-6">{userList}</div>
-                </div>
             </div>
         </div>
     );
