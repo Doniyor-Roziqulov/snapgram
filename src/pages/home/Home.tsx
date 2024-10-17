@@ -1,11 +1,14 @@
 import { Link, NavLink, Outlet } from "react-router-dom";
 import logo from "../../images/logo.svg";
 import { RiHome3Line } from "react-icons/ri";
-import { TbLibraryPhoto } from "react-icons/tb";
+import { TbLibraryPhoto, TbLogout2 } from "react-icons/tb";
 import { HiOutlineSaveAs } from "react-icons/hi";
 import { TfiVideoClapper } from "react-icons/tfi";
 import { BsPeople } from "react-icons/bs";
-import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
+import {
+    IoChatbubbleEllipsesOutline,
+    IoSettingsOutline,
+} from "react-icons/io5";
 import { MdCreateNewFolder } from "react-icons/md";
 import {
     useFollowMutation,
@@ -13,8 +16,9 @@ import {
     useProfileQuery,
 } from "../../redux/api/user-api";
 import { User } from "../../types";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux";
+import { logout } from "../../redux/slice/auth-slice";
 
 const Home = () => {
     const { data } = useGetUsersQuery({ limit: 8 });
@@ -24,6 +28,12 @@ const Home = () => {
     const [followUser] = useFollowMutation();
 
     const handleFollow = (username: string) => followUser(username);
+
+    const dispatch = useDispatch();
+
+    const handleLogOut = () => {
+        dispatch(logout());
+    };
 
     const userList: JSX.Element[] = data?.map(
         (user: User): JSX.Element => (
@@ -61,12 +71,12 @@ const Home = () => {
     );
     return (
         <div className="container mx-auto">
-            <div className="w-[266px] fixed left-0 bg-[#09090A] top-0 min-h-screen pt-12 pb-8 px-6 border-r border-[#1F1F22]">
+            <div className="w-[266px] fixed left-0 bg-[#09090A] top-0 min-h-screen pt-7 pb-8 px-6 border-r border-[#1F1F22]">
                 <Link to={"/"}>
                     <img src={logo} alt="Logo" />
                 </Link>
                 <div>
-                    <div className="flex items-center gap-x-[11px] py-11">
+                    <div className="flex items-center gap-x-[11px] py-6">
                         <img
                             className="w-[54px] h-[54px] rounded-full"
                             src={
@@ -85,10 +95,10 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
-                <ul className="flex flex-col gap-y-6 list_box">
+                <ul className="flex flex-col gap-y-3 list_box mb-16">
                     <li>
                         <NavLink
-                            className="p-4 w-full rounded-lg text-lg text-[#EFEFEF] font-medium flex items-center gap-x-4"
+                            className="px-4 py-2 w-full rounded-lg hover:bg-[#877EFF] home_nav text-lg text-[#EFEFEF] font-medium flex items-center gap-x-4"
                             to={"/"}>
                             <RiHome3Line className="text-2xl text-[#877EFF] link__icon" />{" "}
                             Home
@@ -96,7 +106,7 @@ const Home = () => {
                     </li>
                     <li>
                         <NavLink
-                            className="p-4 w-full rounded-lg text-lg text-[#EFEFEF] font-medium flex items-center gap-x-4"
+                            className="px-4 py-2 w-full rounded-lg hover:bg-[#877EFF] home_nav text-lg text-[#EFEFEF] font-medium flex items-center gap-x-4"
                             to={"/explore"}>
                             <TbLibraryPhoto className="text-2xl text-[#877EFF] link__icon" />{" "}
                             Explore
@@ -104,7 +114,7 @@ const Home = () => {
                     </li>
                     <li>
                         <NavLink
-                            className="p-4 w-full rounded-lg text-lg text-[#EFEFEF] font-medium flex items-center gap-x-4"
+                            className="px-4 py-2 w-full rounded-lg hover:bg-[#877EFF] home_nav text-lg text-[#EFEFEF] font-medium flex items-center gap-x-4"
                             to={"/people"}>
                             <BsPeople className="text-2xl text-[#877EFF] link__icon" />{" "}
                             People
@@ -112,7 +122,7 @@ const Home = () => {
                     </li>
                     <li>
                         <NavLink
-                            className="p-4 w-full rounded-lg text-lg text-[#EFEFEF] font-medium flex items-center gap-x-4"
+                            className="px-4 py-2 w-full rounded-lg hover:bg-[#877EFF] home_nav text-lg text-[#EFEFEF] font-medium flex items-center gap-x-4"
                             to={"/saved"}>
                             <HiOutlineSaveAs className="text-2xl text-[#877EFF] link__icon" />{" "}
                             Saved
@@ -120,7 +130,7 @@ const Home = () => {
                     </li>
                     <li>
                         <NavLink
-                            className="p-4 w-full rounded-lg text-lg text-[#EFEFEF] font-medium flex items-center gap-x-4"
+                            className="px-4 py-2 w-full rounded-lg hover:bg-[#877EFF] home_nav text-lg text-[#EFEFEF] font-medium flex items-center gap-x-4"
                             to={"/reels"}>
                             <TfiVideoClapper className="text-2xl text-[#877EFF] link__icon" />{" "}
                             Reels
@@ -128,7 +138,7 @@ const Home = () => {
                     </li>
                     <li>
                         <NavLink
-                            className="p-4 w-full rounded-lg text-lg text-[#EFEFEF] font-medium flex items-center gap-x-4"
+                            className="px-4 py-2 w-full rounded-lg hover:bg-[#877EFF] home_nav text-lg text-[#EFEFEF] font-medium flex items-center gap-x-4"
                             to={"/chats"}>
                             <IoChatbubbleEllipsesOutline className="text-2xl text-[#877EFF] link__icon" />{" "}
                             Chats
@@ -136,13 +146,27 @@ const Home = () => {
                     </li>
                     <li>
                         <NavLink
-                            className="p-4 w-full rounded-lg text-lg text-[#EFEFEF] font-medium flex items-center gap-x-4"
+                            className="px-4 py-2 w-full rounded-lg hover:bg-[#877EFF] home_nav text-lg text-[#EFEFEF] font-medium flex items-center gap-x-4"
                             to={"/create"}>
                             <MdCreateNewFolder className="text-2xl text-[#877EFF] link__icon" />{" "}
                             Create Post
                         </NavLink>
                     </li>
                 </ul>
+                <div className="list_box flex flex-col gap-y-2">
+                    <button
+                        onClick={() => handleLogOut()}
+                        className="px-4 py-2 w-full rounded-lg text-lg hover:bg-neutral-300 hover:text-red-500 home_btn text-[#EFEFEF] font-medium flex items-center gap-x-4">
+                        <TbLogout2 className="text-2xl text-[#877EFF] link__icon" />{" "}
+                        Logout
+                    </button>
+                    <NavLink
+                        className="px-4 py-2 w-full home_nav hover:bg-[#877EFF] rounded-lg text-lg text-[#EFEFEF] font-medium flex items-center gap-x-4"
+                        to={"/settings"}>
+                        <IoSettingsOutline className="text-2xl text-[#877EFF] link__icon" />{" "}
+                        Create Post
+                    </NavLink>
+                </div>
             </div>
             <div className="ml-[266px] mx-auto container w-auto">
                 <Outlet />
