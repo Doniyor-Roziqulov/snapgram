@@ -73,6 +73,7 @@ const Create = () => {
                                 Caption
                             </p>
                             <input
+                                required
                                 onChange={(e: any) =>
                                     setCaption(e.target.value)
                                 }
@@ -88,6 +89,7 @@ const Create = () => {
                             </p>
                             <div className="w-[630px] h-[289px] relative z-[2]">
                                 <input
+                                    required
                                     onChange={(e: any) =>
                                         setImage(e.target.files)
                                     }
@@ -153,6 +155,7 @@ const Create = () => {
                                 Add Location
                             </p>
                             <input
+                                required
                                 onChange={(e: any) =>
                                     setLocation(e.target.value)
                                 }
@@ -167,6 +170,7 @@ const Create = () => {
                                 Photo/Video Alt Text
                             </p>
                             <input
+                                required
                                 onChange={(e: any) =>
                                     setContentAlt(e.target.value)
                                 }

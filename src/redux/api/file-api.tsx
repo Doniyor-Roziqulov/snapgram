@@ -18,7 +18,18 @@ export const fileApi = api.injectEndpoints({
             }),
             invalidatesTags: [],
         }),
+        getPosts: build.query({
+            query: (params) => ({
+                url: "/api/user/feed?limit=100",
+                params,
+            }),
+            providesTags: [],
+        }),
     }),
 });
 
-export const { useUploadFilesMutation, useCreatePostMutation } = fileApi;
+export const {
+    useUploadFilesMutation,
+    useCreatePostMutation,
+    useGetPostsQuery,
+} = fileApi;

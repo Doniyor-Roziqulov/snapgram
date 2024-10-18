@@ -12,11 +12,71 @@ import { IPost } from "../../types";
 import { FcLike } from "react-icons/fc";
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import { RiShareForwardLine } from "react-icons/ri";
+import { useGetPostsQuery } from "../../redux/api/file-api";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Navigation } from "swiper/modules";
+
+interface PostType {
+    _id: string;
+    caption: string;
+    content_alt: string;
+    createdAt: string;
+    content: string[];
+    likes_count: number;
+    comments_count: number;
+    shares_count: number;
+    location: string;
+}
 
 const House = () => {
     const { data: proPost } = useProfileQuery({});
+    const { data: proData } = useGetPostsQuery({});
+    const proPosts = proData?.posts?.map((e: PostType) => (
+        <div key={e._id}>
+            <div className="flex items-center gap-x-5 mt-5">
+                <p>{e?.content_alt}</p>
+                <p className="text-[#5C5C7B]">#{e?.location}</p>
+            </div>
+            <div>
+                <div className=" w-[600px]">
+                    <Swiper
+                        pagination={{
+                            type: "fraction",
+                        }}
+                        navigation={true}
+                        modules={[Pagination, Navigation]}
+                        className="mySwiper w-[600px]">
+                        {e?.content?.map((i, inx) => (
+                            <SwiperSlide className=" w-[600px]" key={inx}>
+                                <img
+                                    className="rounded-3xl w-[600px] object-contain my-[30px]"
+                                    src={i}
+                                    alt=""
+                                />
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
+                </div>
 
-    const proList: IPost = proPost?.posts[3];
+                <div className="flex items-center gap-x-[30px]">
+                    <p className="flex items-center gap-x-[6px]">
+                        <FcLike className="text-xl " />3 mln
+                    </p>
+                    <p className="flex items-center gap-x-[6px]">
+                        <IoChatbubbleEllipsesOutline className="text-xl text-[#877EFF]" />
+                        17.2 k
+                    </p>
+                    <p className="flex items-center gap-x-[6px]">
+                        <RiShareForwardLine className="text-xl text-[#877EFF]" />
+                        32.1 k
+                    </p>
+                </div>
+            </div>
+        </div>
+    ));
+
+    const proList: IPost = proPost?.posts[4];
 
     const { data } = useGetUsersQuery({ limit: 8 });
     const [followUser] = useFollowMutation();
@@ -102,32 +162,7 @@ const House = () => {
                                 </p>
                             </div>
                         </div>
-                        <div className="flex items-center gap-x-5 mt-5">
-                            <p>{proList?.content_alt}</p>
-                            <p className="text-[#5C5C7B]">
-                                #{proList?.location}
-                            </p>
-                        </div>
-                        <div>
-                            <img
-                                className="rounded-3xl w-[600px] object-contain my-[30px]"
-                                src={proList?.content[0]}
-                                alt=""
-                            />
-                            <div className="flex items-center gap-x-[30px]">
-                                <p className="flex items-center gap-x-[6px]">
-                                    <FcLike className="text-xl " />3 mln
-                                </p>
-                                <p className="flex items-center gap-x-[6px]">
-                                    <IoChatbubbleEllipsesOutline className="text-xl text-[#877EFF]" />
-                                    17.2 k
-                                </p>
-                                <p className="flex items-center gap-x-[6px]">
-                                    <RiShareForwardLine className="text-xl text-[#877EFF]" />
-                                    32.1 k
-                                </p>
-                            </div>
-                        </div>
+                        <div>{proPosts}</div>
                     </div>
                 </div>
             </div>{" "}
