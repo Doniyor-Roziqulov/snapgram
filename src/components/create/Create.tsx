@@ -67,7 +67,7 @@ const Create = () => {
                     <MdCreateNewFolder /> Create a Post
                 </h1>
                 <div>
-                    <form action="">
+                    <form className="pb-6" action="">
                         <div className="mb-4">
                             <p className="text-[#EFEFEF] text-lg font-medium mb-3">
                                 Caption
@@ -182,7 +182,7 @@ const Create = () => {
                         </div>
                         <button
                             onClick={handleCreatePost}
-                            className="text-white">
+                            className="text-white font-semibold py-3 px-5 rounded-lg bg-[#877EFF] mt-10">
                             Share Post
                         </button>
                     </form>
