@@ -7,6 +7,7 @@ import {
 } from "../../redux/api/file-api";
 import { useNavigate } from "react-router-dom";
 import { IoClose } from "react-icons/io5";
+import { useProfileQuery } from "../../redux/api/user-api";
 
 const Create = () => {
     const navigate = useNavigate();
@@ -17,6 +18,9 @@ const Create = () => {
     const [caption, setCaption] = useState<string>("");
     const [location, setLocation] = useState<string>("");
     const [contentAlt, setContentAlt] = useState<string>("");
+    const { data: profile } = useProfileQuery({});
+    console.log(profile);
+
     const handleUpload = () => {
         const formData = new FormData();
         // @ts-ignore
@@ -66,7 +70,7 @@ const Create = () => {
                 <h1 className="text-white text-4xl font-bold flex items-center gap-x-[10px]">
                     <MdCreateNewFolder /> Create a Post
                 </h1>
-                <div>
+                <div className="flex gap-x-[150px]">
                     <form className="pb-6" action="">
                         <div className="mb-4">
                             <p className="text-[#EFEFEF] text-lg font-medium mb-3">
@@ -186,6 +190,29 @@ const Create = () => {
                             Share Post
                         </button>
                     </form>
+                    <div className="px-11">
+                        <div className="w-[330px]">
+                            <div className="flex flex-col items-center ">
+                                <img
+                                    className="w-[130px] h-[130px] rounded-full mb-6"
+                                    src={
+                                        import.meta.env.VITE_APP_BASE_URL +
+                                        profile?.photo
+                                    }
+                                    alt="img"
+                                />
+                                <p className="text-[30px] text-white font-bold mb-3">
+                                    {profile?.fullName}
+                                </p>
+                                <p className="text-[18px] text-[#7878A3]">
+                                    @{profile?.username}
+                                </p>
+                            </div>
+                            <p className="text-2xl font-bold mt-14 text-white">
+                                Top posts by you
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
