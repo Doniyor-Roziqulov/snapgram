@@ -16,7 +16,7 @@ import { RiShareForwardLine } from "react-icons/ri";
 const House = () => {
     const { data: proPost } = useProfileQuery({});
 
-    const proList: IPost = proPost?.posts[0];
+    const proList: IPost = proPost?.posts[3];
 
     const { data } = useGetUsersQuery({ limit: 8 });
     const [followUser] = useFollowMutation();

@@ -19,22 +19,25 @@ const Create = () => {
     const [contentAlt, setContentAlt] = useState<string>("");
     const handleUpload = () => {
         const formData = new FormData();
-        if (Array.isArray(image)) {
-            Array.from(image).forEach((img: File) => {
-                formData.append("files", img, img.name);
-            });
-        }
+        // @ts-ignore
+        Array.from(image).forEach((img: File) => {
+            formData.append("files", img, img.name);
+        });
+
         type FileObject = { url: string };
 
         uploadFiles(formData)
             .unwrap()
             .then((res) =>
                 Object.keys(res).forEach((key: string) => {
-                    const fileGroup = res[key as keyof typeof res]; // TypeScript tipini aniqlash uchun
+                    const fileGroup = res[key as keyof typeof res];
                     if (Array.isArray(fileGroup)) {
                         fileGroup.forEach((group: FileObject[]) => {
                             group.forEach((file: FileObject) => {
-                                setSaveImages(file.url); // URL ni konsolga chiqarish
+                                setSaveImages((prevImages: string[]) => [
+                                    ...prevImages,
+                                    file.url,
+                                ]);
                             });
                         });
                     }
@@ -52,7 +55,7 @@ const Create = () => {
         };
         createPost(newPost)
             .unwrap()
-            .then((res) => {
+            .then(() => {
                 navigate("/");
             });
     };
