@@ -32,25 +32,27 @@ const Home = () => {
                 <Link to={"/"}>
                     <img src={logo} alt="Logo" />
                 </Link>
-                <div>
-                    <div className="flex items-center gap-x-[11px] py-6">
-                        <img
-                            className="w-[54px] h-[54px] rounded-full"
-                            src={
-                                import.meta.env.VITE_APP_BASE_URL +
-                                userState?.photo
-                            }
-                            alt="User img"
-                        />
-                        <div>
-                            <h3 className="text-lg text-white font-bold">
-                                {userState?.fullName}
-                            </h3>
-                            <p className="text-sm text-[#7878A3]">
-                                @{prodata?.username}
-                            </p>
+                <div className="last__box">
+                    <NavLink className="" to={"/profile"}>
+                        <div className="flex items-center gap-x-[11px] py-6">
+                            <img
+                                className="w-[54px] h-[54px] rounded-full"
+                                src={
+                                    import.meta.env.VITE_APP_BASE_URL +
+                                    userState?.photo
+                                }
+                                alt="User img"
+                            />
+                            <div>
+                                <h3 className="text-lg text-white font-bold">
+                                    {userState?.fullName}
+                                </h3>
+                                <p className="text-sm text-[#7878A3]">
+                                    @{prodata?.username}
+                                </p>
+                            </div>
                         </div>
-                    </div>
+                    </NavLink>
                 </div>
                 <ul className="flex flex-col gap-y-3 list_box mb-16">
                     <li>

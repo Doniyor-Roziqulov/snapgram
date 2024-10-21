@@ -7,6 +7,18 @@ body {
     color: #fff;
 }
 
+.last__box .active::before {
+    content: "";
+    height: 44px;
+    width: 6.694px;
+    background-color: #877eff;
+    position: absolute;
+    left: 0px;
+    top: 100px;
+    border-bottom-right-radius: 50%;
+    border-top-right-radius: 50%;
+}
+
 .list_box .active::before {
     content: "";
     height: 44px;
