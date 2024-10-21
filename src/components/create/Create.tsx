@@ -19,7 +19,6 @@ const Create = () => {
     const [location, setLocation] = useState<string>("");
     const [contentAlt, setContentAlt] = useState<string>("");
     const { data: profile } = useProfileQuery({});
-    console.log(profile);
 
     const handleUpload = () => {
         const formData = new FormData();
@@ -28,13 +27,13 @@ const Create = () => {
             formData.append("files", img, img.name);
         });
 
-        type FileObject = { url: string };
+        type FileObject = { url: string; type: "IMAGE" };
 
         uploadFiles(formData)
             .unwrap()
             .then((res) =>
                 Object.keys(res).forEach((key: string) => {
-                    const fileGroup = res[key as keyof typeof res];
+                    const fileGroup = res[key as keyof typeof res]; // TypeScript tipini aniqlash uchun
                     if (Array.isArray(fileGroup)) {
                         fileGroup.forEach((group: FileObject[]) => {
                             group.forEach((file: FileObject) => {

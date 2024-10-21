@@ -3,12 +3,12 @@ import profileimg from "../../images/profile.png";
 import {
     useFollowMutation,
     useGetUsersQuery,
-    useProfileQuery,
+    // useProfileQuery,
 } from "../../redux/api/user-api";
 const profileData = Array(9).fill(0);
 import { User } from "../../types";
 import { RootState } from "../../redux";
-import { IPost } from "../../types";
+// import { IPost } from "../../types";
 import { FcLike } from "react-icons/fc";
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import { RiShareForwardLine } from "react-icons/ri";
@@ -22,7 +22,12 @@ interface PostType {
     caption: string;
     content_alt: string;
     createdAt: string;
-    content: string[];
+    content: [
+        {
+            url: string;
+            type: "IMAGE";
+        }
+    ];
     likes_count: number;
     comments_count: number;
     shares_count: number;
@@ -30,8 +35,9 @@ interface PostType {
 }
 
 const House = () => {
-    const { data: proPost } = useProfileQuery({});
+    // const { data: proPost } = useProfileQuery({});
     const { data: proData } = useGetPostsQuery({});
+
     const proPosts = proData?.posts?.map((e: PostType) => (
         <div key={e._id}>
             <div className="flex items-center gap-x-5 mt-5">
@@ -51,7 +57,7 @@ const House = () => {
                             <SwiperSlide className=" w-[600px]" key={inx}>
                                 <img
                                     className="rounded-3xl w-[600px] object-contain my-[30px]"
-                                    src={i}
+                                    src={i.url}
                                     alt=""
                                 />
                             </SwiperSlide>
@@ -76,7 +82,7 @@ const House = () => {
         </div>
     ));
 
-    const proList: IPost = proPost?.posts[4];
+    // const proList: IPost = proPost?.posts[4];
 
     const { data } = useGetUsersQuery({ limit: 8 });
     const [followUser] = useFollowMutation();
@@ -155,10 +161,10 @@ const House = () => {
                             />
                             <div>
                                 <p className="text-lg font-bold">
-                                    {proList?.caption}
+                                    {userState?.username}
                                 </p>
                                 <p className="text-sm text-[#7878A3]">
-                                    {proList?.createdAt}
+                                    {userState?.fullName}
                                 </p>
                             </div>
                         </div>
