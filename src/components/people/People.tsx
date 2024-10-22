@@ -3,9 +3,10 @@ import { useFollowMutation, useGetUsersQuery } from "../../redux/api/user-api";
 import { User } from "../../types";
 import { RootState } from "../../redux";
 import { BsPeople } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 const People = () => {
-    const { data } = useGetUsersQuery({});
+    const { data } = useGetUsersQuery({ limit: 100 });
     const [followUser] = useFollowMutation();
     const userState = useSelector((state: RootState) => state.auth.user);
     const handleFollow = (username: string) => followUser(username);
@@ -15,12 +16,18 @@ const People = () => {
             key={e._id}>
             <img
                 className="w-[90px] h-[90px] rounded-full"
-                src={import.meta.env.VITE_APP_BASE_URL + e.photo}
+                src={
+                    e?.photo?.length > 32
+                        ? e?.photo
+                        : import.meta.env.VITE_APP_BASE_URL + e?.photo
+                }
                 alt="img"
             />
-            <p className="text-white text-2xl font-bold mt-6 mb-2">
+            <Link
+                to={`/users/${e.username}`}
+                className="text-white text-2xl font-bold mt-6 mb-2">
                 {e.fullName}
-            </p>
+            </Link>
             <p className="text-lg font-medium text-[#7878A3] pb-5">
                 @{e.username}
             </p>

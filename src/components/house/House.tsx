@@ -1,14 +1,9 @@
 import { useSelector } from "react-redux";
 import profileimg from "../../images/profile.png";
-import {
-    useFollowMutation,
-    useGetUsersQuery,
-    // useProfileQuery,
-} from "../../redux/api/user-api";
+import { useFollowMutation, useGetUsersQuery } from "../../redux/api/user-api";
 const profileData = Array(9).fill(0);
 import { User } from "../../types";
 import { RootState } from "../../redux";
-// import { IPost } from "../../types";
 import { FcLike } from "react-icons/fc";
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import { RiShareForwardLine } from "react-icons/ri";
@@ -16,6 +11,7 @@ import { useGetPostsQuery } from "../../redux/api/file-api";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation } from "swiper/modules";
+import { Link } from "react-router-dom";
 
 interface PostType {
     _id: string;
@@ -35,7 +31,6 @@ interface PostType {
 }
 
 const House = () => {
-    // const { data: proPost } = useProfileQuery({});
     const { data: proData } = useGetPostsQuery({});
 
     const proPosts = proData?.posts?.map((e: PostType) => (
@@ -82,8 +77,6 @@ const House = () => {
         </div>
     ));
 
-    // const proList: IPost = proPost?.posts[4];
-
     const { data } = useGetUsersQuery({ limit: 8 });
     const [followUser] = useFollowMutation();
     const userState = useSelector((state: RootState) => state.auth.user);
@@ -98,9 +91,11 @@ const House = () => {
                     src={import.meta.env.VITE_APP_BASE_URL + user.photo}
                     alt="User img"
                 />
-                <h3 className="text-sm font-semibold text-white mb-[2px] mt-[10px] text-center overflow-hidden whitespace-nowrap text-ellipsis">
+                <Link
+                    to={`/users/${user?.username}`}
+                    className="text-sm font-semibold text-white mb-[2px] mt-[10px] text-center overflow-hidden whitespace-nowrap text-ellipsis">
                     {user.fullName}
-                </h3>
+                </Link>
                 <p className="text-[10px] font-medium text-[#7878A3] text-center mb-3">
                     Followed by jsmastery
                 </p>
