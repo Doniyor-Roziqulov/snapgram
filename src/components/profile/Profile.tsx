@@ -7,7 +7,6 @@ import { FiCamera } from "react-icons/fi";
 
 const Profile = () => {
     const { data } = useProfileQuery({});
-    console.log(data);
 
     return (
         <div className="pt-[50px] pl-12">

@@ -23,7 +23,6 @@ const Posts = ({ userId }: any) => {
             return `<span class="${className} bg-white w-2 h-2 p-1 rounded-full inline-block"></span>`;
         },
     };
-    console.log(posts);
 
     return (
         <div className="grid grid-cols-3 gap-x-[30px] gap-y-[45px]">
