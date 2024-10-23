@@ -21,7 +21,7 @@ interface PostType {
     content: [
         {
             url: string;
-            type: "IMAGE";
+            type: "IMAGE" | "VIDEO";
         }
     ];
     likes_count: number;
@@ -50,16 +50,25 @@ const House = () => {
                         className="mySwiper w-[600px]">
                         {e?.content?.map((i, inx) => (
                             <SwiperSlide className=" w-[600px]" key={inx}>
-                                <img
-                                    className="rounded-3xl w-[600px] object-contain my-[30px]"
-                                    src={i.url}
-                                    alt=""
-                                />
+                                <div>
+                                    {i.type === "IMAGE" && (
+                                        <img
+                                            className="rounded-3xl w-[600px] h-[400px] object-cover my-[30px]"
+                                            src={i.url}
+                                            alt=""
+                                        />
+                                    )}
+                                    {i.type === "VIDEO" && (
+                                        <video
+                                            className="rounded-3xl w-[600px] h-[400px] object-cover my-[30px]"
+                                            src={i.url}
+                                            controls></video>
+                                    )}
+                                </div>
                             </SwiperSlide>
                         ))}
                     </Swiper>
                 </div>
-
                 <div className="flex items-center gap-x-[30px]">
                     <p className="flex items-center gap-x-[6px]">
                         <FcLike className="text-xl " />3 mln
