@@ -52,6 +52,7 @@ const House: React.FC<CommentInputProps> = ({ id, refetch }) => {
     const [toggleLike] = useToggleLikeMutation({});
     const [postCommit, { isLoading: isCommLoading }] = usePostCommentMutation();
     const [message, setMessage] = useState<string>("");
+    console.log(proData);
 
     const handleCommentChange = (value: string) => {
         setMessage(value);
@@ -297,7 +298,7 @@ const House: React.FC<CommentInputProps> = ({ id, refetch }) => {
                                     </div>
                                 </div>
                             ) : (
-                                <div className="flex flex-col min-[480px]:w-[420px] pb-20 2xl:w-auto items-center">
+                                <div className="flex flex-col justify-center min-[480px]:w-[420px] pb-20 2xl:w-auto items-center">
                                     {proPosts}
                                 </div>
                             )}

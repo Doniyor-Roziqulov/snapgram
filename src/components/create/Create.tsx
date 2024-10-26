@@ -54,7 +54,7 @@ const Create = () => {
             caption: caption,
             location: location,
             content_alt: contentAlt,
-            content: saveImages,
+            content: saveImages.map((link) => ({ type: "IMAGE", url: link })),
         };
         createPost(newPost)
             .unwrap()

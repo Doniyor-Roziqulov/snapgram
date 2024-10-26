@@ -20,12 +20,3 @@ export interface User {
         }
     ];
 }
-
-export interface createPost {
-    content: [
-        {
-            url: string;
-            type: "AUDIO" | "VIDEO" | "IMAGE";
-        }
-    ];
-}
