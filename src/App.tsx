@@ -6,9 +6,9 @@ import "swiper/css/navigation";
 
 function App() {
     return (
-        <>
+        <div>
             <Routers />
-        </>
+        </div>
     );
 }
 

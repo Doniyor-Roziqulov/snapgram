@@ -12,7 +12,7 @@ import { useProfileQuery } from "../../redux/api/user-api";
 const Create = () => {
     const navigate = useNavigate();
     const [uploadFiles] = useUploadFilesMutation();
-    const [createPost] = useCreatePostMutation();
+    const [createPost, { isLoading }] = useCreatePostMutation();
     const [saveImages, setSaveImages] = useState<string[]>([]);
     const [image, setImage] = useState<File[] | string>("");
     const [caption, setCaption] = useState<string>("");
@@ -64,15 +64,15 @@ const Create = () => {
     };
 
     return (
-        <div className="pt-[60px] pl-[40px]">
+        <div className="pt-[60px] px-4 pb-[85px] lg:pl-[40px]">
             <div>
-                <h1 className="text-white text-4xl font-bold flex items-center gap-x-[10px]">
+                <h1 className="text-white text-lg lg:text-4xl font-bold flex items-center gap-x-[10px]">
                     <MdCreateNewFolder /> Create a Post
                 </h1>
-                <div className="flex gap-x-[150px]">
-                    <form className="pb-6" action="">
+                <div className="flex lg:gap-x-[150px]">
+                    <form className="pb-6 w-full" action="">
                         <div className="mb-4">
-                            <p className="text-[#EFEFEF] text-lg font-medium mb-3">
+                            <p className="text-[#EFEFEF] lg:text-lg font-medium mb-3">
                                 Caption
                             </p>
                             <input
@@ -80,17 +80,17 @@ const Create = () => {
                                 onChange={(e: any) =>
                                     setCaption(e.target.value)
                                 }
-                                className="w-[630px] h-[114px] rounded-[10px] bg-[#101012] text-white"
+                                className="w-full lg:w-[630px] h-[114px] rounded-[10px] bg-[#101012] text-white"
                                 type="text"
                                 name="caption"
                                 id=""
                             />
                         </div>
                         <div>
-                            <p className="text-[#EFEFEF] text-lg font-medium mb-3">
+                            <p className="text-[#EFEFEF] lg:text-lg font-medium mb-3">
                                 Add Photos
                             </p>
-                            <div className="w-[630px] h-[289px] relative z-[2]">
+                            <div className="w-full lg:w-[630px] h-[289px] relative z-[2]">
                                 <input
                                     required
                                     onChange={(e: any) =>
@@ -154,7 +154,7 @@ const Create = () => {
                             ) : null}
                         </div>
                         <div className="mb-4">
-                            <p className="text-[#EFEFEF] text-lg font-medium mb-3">
+                            <p className="text-[#EFEFEF] lg:text-lg font-medium mb-3">
                                 Add Location
                             </p>
                             <input
@@ -162,14 +162,14 @@ const Create = () => {
                                 onChange={(e: any) =>
                                     setLocation(e.target.value)
                                 }
-                                className="w-[630px] h-[54px] rounded-[10px] bg-[#101012] text-white"
+                                className="w-full lg:w-[630px] h-[54px] rounded-[10px] bg-[#101012] text-white"
                                 type="text"
                                 name="location"
                                 id=""
                             />
                         </div>{" "}
                         <div>
-                            <p className="text-[#EFEFEF] text-lg font-medium mb-3">
+                            <p className="text-[#EFEFEF] lg:text-lg font-medium mb-3">
                                 Photo/Video Alt Text
                             </p>
                             <input
@@ -177,7 +177,7 @@ const Create = () => {
                                 onChange={(e: any) =>
                                     setContentAlt(e.target.value)
                                 }
-                                className="w-[630px] h-[54px] rounded-[10px] bg-[#101012] text-white"
+                                className="w-full lg:w-[630px] h-[54px] rounded-[10px] bg-[#101012] text-white"
                                 type="text"
                                 name="content_alt"
                                 id=""
@@ -186,10 +186,10 @@ const Create = () => {
                         <button
                             onClick={handleCreatePost}
                             className="text-white font-semibold py-3 px-5 rounded-lg bg-[#877EFF] mt-10">
-                            Share Post
+                            {isLoading ? "Loading..." : "Share Post"}
                         </button>
                     </form>
-                    <div className="px-11">
+                    <div className="px-11 hidden lg:block">
                         <div className="w-[330px]">
                             <div className="flex flex-col items-center ">
                                 <img
