@@ -12,8 +12,13 @@ import { useGetPostsQuery } from "../../redux/api/file-api";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import { Link } from "react-router-dom";
-import { useToggleLikeMutation } from "../../redux/api/likecommit-api";
+import {
+    useToggleLikeMutation,
+    usePostCommentMutation,
+} from "../../redux/api/likecommit-api";
 import { GoHeart } from "react-icons/go";
+import { TbSend } from "react-icons/tb";
+import { useState } from "react";
 
 interface PostType {
     _id: string;
@@ -30,12 +35,40 @@ interface PostType {
     comments_count: number;
     shares_count: number;
     location: string;
-    likes: string;
+    likes: string[];
+    comments: string[];
+    owner: {
+        photo: string;
+    };
 }
 
-const House = () => {
+interface CommentInputProps {
+    id: string;
+    refetch?: () => void;
+}
+
+const House: React.FC<CommentInputProps> = ({ id, refetch }) => {
     const { data: proData, isLoading: isProLoading } = useGetPostsQuery({});
     const [toggleLike] = useToggleLikeMutation({});
+    const [postCommit, { isLoading: isCommLoading }] = usePostCommentMutation();
+    const [message, setMessage] = useState<string>("");
+
+    const handleCommentChange = (value: string) => {
+        setMessage(value);
+    };
+
+    const postComment = (e: any) => {
+        e.preventDefault();
+        postCommit({ id, body: { message } }).then(() => {
+            if (typeof refetch === "function") {
+                refetch();
+            } else {
+                console.error("refetch is not a function:", refetch);
+            }
+            setMessage("");
+        });
+    };
+
     const handleLike = (_id: string) => toggleLike(_id);
 
     const proPosts = proData?.posts?.map((e: PostType) => (
@@ -91,12 +124,46 @@ const House = () => {
                     </div>
                     <p className="flex items-center gap-x-[6px]">
                         <IoChatbubbleEllipsesOutline className="text-xl text-[#877EFF]" />
-                        17.2 k
+                        {e?.comments?.length}
                     </p>
                     <p className="flex items-center gap-x-[6px]">
                         <RiShareForwardLine className="text-xl text-[#877EFF]" />
                         32.1 k
                     </p>
+                </div>
+                <div className="flex items-center mt-8 w-full">
+                    <img
+                        className="w-10 h-10 rounded-full"
+                        src={
+                            e?.owner?.photo.length >= 40
+                                ? e?.owner?.photo
+                                : import.meta.env.VITE_APP_BASE_URL +
+                                  e?.owner?.photo
+                        }
+                        alt=""
+                    />
+                    <form className="flex items-center w-full h-11 bg-[#101012] px-4 rounded-lg">
+                        <input
+                            value={message}
+                            onChange={(e) =>
+                                handleCommentChange(e.target.value)
+                            }
+                            required
+                            className="w-full h-full bg-transparent"
+                            type="text"
+                            name="message"
+                            id=""
+                            placeholder="Write your comment..."
+                        />
+                        <button
+                            className={`${
+                                isCommLoading && "cursor-wait"
+                            } cursor-pointer`}
+                            disabled={!message}
+                            onClick={postComment}>
+                            <TbSend className="text-[#877EFFEF] " />
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -115,7 +182,12 @@ const House = () => {
                     <Link to={`/users/${user?.username}`}>
                         <img
                             className="w-[54px] h-[54px] rounded-full"
-                            src={import.meta.env.VITE_APP_BASE_URL + user.photo}
+                            src={
+                                user.photo.length >= 40
+                                    ? user.photo
+                                    : import.meta.env.VITE_APP_BASE_URL +
+                                      user.photo
+                            }
                             alt="User img"
                         />
                     </Link>

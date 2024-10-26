@@ -27,7 +27,7 @@ const Create = () => {
             formData.append("files", img, img.name);
         });
 
-        type FileObject = { url: string; type: "IMAGE" };
+        type FileObject = { url: string; type: "VIDEO" };
 
         uploadFiles(formData)
             .unwrap()
